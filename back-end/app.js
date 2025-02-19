@@ -27,13 +27,13 @@ app.get('/aboutus', (req, res) => {
   try {
     res.json({
       about: "Hello, I'm Matthew. I am 21 years old and currently a senior. I was originally admitted to Tandon for civil engineering but decided to switch to computer science at CAS my sophomore year. I'm from Houston, Texas. I am very passionate about sports, particularly baseball. I love to watch and play it casually, especially when it comes to pitching. I also enjoy listening to music and spend a lot of time on Spotify. My favorite genre is probably rock from the 70s-90s.",
-      image: "https://github.com/agiledev-students-spring2025/3-simple-mern-stack-app-bruhcolate/blob/master/front-end/public/me.jpg"
+      image: "https://raw.githubusercontent.com/agiledev-students-spring2025/3-simple-mern-stack-app-bruhcolate/master/front-end/public/me.jpg"
     })
   } catch (err) {
     console.error(err)
     res.status(400).json({
       error: err,
-      status: 'failed to retrieve messages from the database',
+      status: 'failed to retrieve about us info',
     })
   }
 })

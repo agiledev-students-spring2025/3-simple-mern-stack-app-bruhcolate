@@ -1,25 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const AboutUs = () => {
   const [aboutInfo, setAboutInfo] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('/aboutus')
-      .then(response => response.json())
-      .then(data => setAboutInfo(data))
-      .catch(err => setError('Failed to load about information'));
+    axios
+      .get(`${process.env.REACT_APP_SERVER_HOSTNAME}/aboutus`)
+      .then(response => {
+        console.log(response.data);
+        setAboutInfo(response.data);
+      })
+      .catch(err => {
+        const errorMessage = JSON.stringify(err, null, 2);
+        setError(errorMessage);
+      });
   }, []);
 
-  if (error) return <p>{error}</p>;
-  if (!aboutInfo) return <p>Loading...</p>;
-
   return (
-    <div style={{ maxWidth: '600px', margin: 'auto', textAlign: 'center' }}>
-      <h2>About Me</h2>
-      <p>{aboutInfo.about}</p>
-      {aboutInfo.image && <img src={aboutInfo.image} alt="About Me" style={{ width: '100%', borderRadius: '8px' }} />}
-    </div>
+    <>
+      <h1>About Me</h1>
+
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {aboutInfo && (
+        <div style={{ maxWidth: '600px', margin: 'auto', textAlign: 'center' }}>
+          <p>{aboutInfo.about}</p>
+          {aboutInfo.image && (
+            <img src={aboutInfo.image} alt="Me" style={{ width: '100%', borderRadius: '8px', marginTop: '10px' }} />
+          )}
+        </div>
+      )}
+    </>
   );
 };
 
